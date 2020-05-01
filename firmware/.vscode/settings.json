@@ -1,0 +1,11 @@
+{
+    "python.linting.enabled": true,
+    "python.jediEnabled": false,
+
+    // Loaded Stubs:  esp8266-1.12.0 
+    "python.autoComplete.extraPaths": [".micropy/esp8266-1.12.0/frozen", ".micropy/esp8266-1.12.0/stubs", ".micropy/firmware"],
+    "python.autoComplete.typeshedPaths":  [".micropy/esp8266-1.12.0/frozen", ".micropy/esp8266-1.12.0/stubs", ".micropy/firmware"],
+    "python.analysis.typeshedPaths":  [".micropy/esp8266-1.12.0/frozen", ".micropy/esp8266-1.12.0/stubs", ".micropy/firmware"],
+
+    "python.linting.pylintEnabled": true
+}

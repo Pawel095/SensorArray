@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "c:\\Users\\oem\\Desktop\\TAU\\SensorArray\\venv\\Scripts\\python.exe",
+    "python.pythonPath": "venv/bin/python",
     "python.linting.flake8Enabled": true,
     "python.linting.enabled": true,
     "python.formatting.provider": "black",
