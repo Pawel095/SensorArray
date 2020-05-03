@@ -1,7 +1,5 @@
 import network
-import util
 from config import CONFIG
-from time import sleep
 
 
 def startAP(ssid, password, security=network.AUTH_WPA2_PSK):

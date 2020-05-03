@@ -1,7 +1,6 @@
 from wlan.control import startAP, disableCL
 import util
 from config import CONFIG, save_config
-import uasyncio as asyncio
 from server import Server, Response
 
 app = Server()
@@ -34,7 +33,8 @@ def index(req):
 
 
 def mainJs(req):
-    return Response(status=200, body=open("setupModeStatic/main.js"))
+    headers = {"Content-Type": "application/javascript"}
+    return Response(status=200, body=open("setupModeStatic/main.js"), headers=headers)
 
 
 def jquery(req):
@@ -42,4 +42,4 @@ def jquery(req):
         "Content-Type": "application/javascript",
         "Cache-Control": "max-age=2592000, public",
     }
-    return Response(status=200, body=open("jquery/jquery.js"))
+    return Response(status=200, body=open("jquery/jquery.js"), headers=headers)

@@ -12,14 +12,14 @@ class Request:
             self.method = t[0]
             self.url = t[1]
             self.protocol = t[2]
-        except IndexError as e:
+        except IndexError:
             print("request empty")
 
         self.headers = []
-        for l in lines[1:]:
-            if l == "":
+        for line in lines[1:]:
+            if line == "":
                 break
-            t = l.split(":")
+            t = line.split(":")
             self.headers.append({t[0]: t[1]})
 
         # parse params in url
