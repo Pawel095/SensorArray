@@ -1,5 +1,5 @@
-import uasyncio as asyncio
 import gc
+import uasyncio as asyncio
 
 METHODS = ["GET", "POST", "PUT", "DELETE"]
 
@@ -13,7 +13,7 @@ class Request:
             self.url = t[1]
             self.protocol = t[2]
         except IndexError as e:
-            raise ValueError("request empty")
+            print("request empty")
 
         self.headers = []
         for l in lines[1:]:
@@ -34,7 +34,12 @@ class Request:
                 k, v = p.split("=")
                 self.params.append({k: v})
 
-        except IndexError as e:
+        except ValueError:
+            # no params in request, url includes ?
+            self.route = self.url[:-1]
+            self.params = []
+
+        except IndexError:
             # no params in request
             self.route = self.url
             self.params = []
@@ -86,11 +91,21 @@ class Server:
 
         for r in self.routes:
             if r["route"] == req.route:
-                resp = r["view"].runMethod(req)
-                print("handler: {}".format(r["view"]))
+                view = r.get("view")
+                func = r.get("func")
+
+                if view is not None:
+                    resp = view.runMethod(req)
+                    print("View: {}".format(r["view"]))
+
+                elif func is not None:
+                    if req.method in r["methods"]:
+                        print("Func {}".format(r["func"]))
+                        resp = func(req)
+                    else:
+                        resp = Response(status=405)
 
         for b in resp.to_bytes():
-            print(b)
             await writer.awrite(b)
         await writer.aclose()
         await reader.aclose()
@@ -100,6 +115,11 @@ class Server:
         """
         print("registering {}".format({"view": str(view), "route": route}))
         self.routes.append({"view": view, "route": route})
+
+    def register_func(self, func, route, methods):
+        print(print("registering {}".format(
+            {"func": str(func), "route": route, "methods": methods})))
+        self.routes.append({"func": func, "route": route, "methods": methods})
 
     def run(self):
         task = asyncio.start_server(self.handler, "0.0.0.0", 80, backlog=2)
