@@ -11,4 +11,4 @@ class RegisteredSensors(models.Model):
 class LoggedData(models.Model):
     temperature = models.FloatField
     humidity = models.FloatField
-    sensor = models.ForeignKey(RegisteredSensors, on_delete=models.SET_NULL)
+    sensor = models.ForeignKey(RegisteredSensors, on_delete=models.SET_NULL, null=True)
