@@ -40,6 +40,7 @@ window.onload = (ev) => {
                 setTimeout(() => {
                   clearInterval(self);
                 }, 100);
+                
                 break;
               default:
                 break;
