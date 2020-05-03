@@ -22,7 +22,7 @@ def connectCL():
     passw = CONFIG.get("pass")
 
     if ssid == "" or passw == "":
-        raise ConnectionError("ssid or password not available")
+        return False
 
     cl.connect(ssid, passw)
 

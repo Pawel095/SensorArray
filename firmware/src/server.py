@@ -66,7 +66,7 @@ class Response:
         self.status = kwargs.get("status", 500)
         self.reason = kwargs.get("reason", "")
         self.headers = kwargs.get("headers", {})
-        self.body = str(kwargs.get("body", ""))
+        self.body = kwargs.get("body", "")
 
     def to_bytes(self):
         yield "{} {} {}\n".format(self.protocol, self.status, self.reason).encode()
