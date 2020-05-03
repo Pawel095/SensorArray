@@ -1,11 +1,22 @@
 import ujson as json
 # from setupMode import SetupMode
 from config import CONFIG
-import server
+from server import Server, View, Response
 from wlan.control import connectCL
 
 
-if CONFIG['state'] == "setup":
-    # SetupMode()()
+class TestView(View):
+    description = "simple test view"
+
+    def get(self, request):
+        f = open("index.html")
+        headers = {"Content-Type": "text/html",
+                   "Cache-Control": "max-age=2592000, public"}
+        return Response(status=200, body=f, headers=headers)
+
+
+if CONFIG["state"] == "setup":
     connectCL()
-    server.run()
+    app = Server()
+    app.register_view(TestView(), "/")
+    app.run()
