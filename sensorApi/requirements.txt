@@ -1,2 +1,8 @@
 django==3.0.5
 djangorestframework==3.11.0
+
+#dev
+flake8
+rope
+black
+coverage
