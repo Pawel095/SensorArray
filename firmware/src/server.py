@@ -44,6 +44,15 @@ class Request:
             self.route = self.url
             self.params = []
 
+        self.body = ""
+        flag = False
+        for line in lines:
+            if line == "":
+                flag = True
+
+            if flag:
+                self.body += str(line)
+
     def __str__(self):
         ret = "method:{}\r\nURL:{}\r\n".format(self.method, self.url)
         for h in self.headers:
@@ -57,7 +66,7 @@ class Response:
         self.status = kwargs.get("status", 500)
         self.reason = kwargs.get("reason", "")
         self.headers = kwargs.get("headers", {})
-        self.body = kwargs.get("body", "")
+        self.body = str(kwargs.get("body", ""))
 
     def to_bytes(self):
         yield "{} {} {}\n".format(self.protocol, self.status, self.reason).encode()
