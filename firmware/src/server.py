@@ -117,8 +117,11 @@ class Server:
         self.routes.append({"view": view, "route": route})
 
     def register_func(self, func, route, methods):
-        print(print("registering {}".format(
-            {"func": str(func), "route": route, "methods": methods})))
+        print(
+            "registering {}".format(
+                {"func": str(func), "route": route, "methods": methods}
+            )
+        )
         self.routes.append({"func": func, "route": route, "methods": methods})
 
     def run(self):

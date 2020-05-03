@@ -32,9 +32,14 @@ class SetupMode:
 def index(req):
     return Response(status=200, body=open("setupModeStatic/index.html"))
 
+
 def mainJs(req):
     return Response(status=200, body=open("setupModeStatic/main.js"))
 
-def jquery(req):
-    return Response(status=200, body=open("jquery/jquery.js"))
 
+def jquery(req):
+    headers = {
+        "Content-Type": "application/javascript",
+        "Cache-Control": "max-age=2592000, public",
+    }
+    return Response(status=200, body=open("jquery/jquery.js"))
