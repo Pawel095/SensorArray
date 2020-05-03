@@ -1,21 +1,21 @@
 import network
 from config import CONFIG
 
+ap = network.WLAN(network.AP_IF)
+cl = network.WLAN(network.STA_IF)
+
 
 def startAP(ssid, password, security=network.AUTH_WPA2_PSK):
-    ap = network.WLAN(network.AP_IF)
     ap.config(essid=ssid, password=password, authmode=security)
     ap.active(True)
     print(ap.ifconfig())
 
 
 def stopAP():
-    ap = network.WLAN(network.AP_IF)
     ap.active(False)
 
 
 def connectCL():
-    cl = network.WLAN(network.STA_IF)
     cl.active(True)
 
     ssid = CONFIG.get("ssid")
@@ -27,11 +27,13 @@ def connectCL():
     cl.connect(ssid, passw)
 
 
+def statusCL():
+    return cl.status()
+
+
 def disconnectCL():
-    cl = network.WLAN(network.STA_IF)
     cl.disconnect()
 
 
 def disableCL():
-    cl = network.WLAN(network.STA_IF)
     cl.active(False)
