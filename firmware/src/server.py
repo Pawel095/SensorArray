@@ -51,7 +51,7 @@ class Request:
                 flag = True
 
             if flag:
-                self.body += str(line)
+                self.body += line+"\r\n"
 
     def __str__(self):
         ret = "method:{}\r\nURL:{}\r\n".format(self.method, self.url)

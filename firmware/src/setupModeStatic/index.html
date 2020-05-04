@@ -8,16 +8,23 @@
   </head>
 
   <body>
+    <p id="result"></p>
+    <p id="registerResult"></p>
     <form id="connect">
       <label for="ssid">SSID</label>
-      <input type="text" id="ssid" name="ssid" />
+      <input type="text" id="ssid" name="ssid" value="UPCBE8637A" />
       <label for="pass">password (optional)</label>
-      <input type="password" id="pass" />
+      <input type="password" id="pass" value="wEsuvjpE4up2" />
       <button type="submit">Connect</button>
     </form>
-    <form id="register">
-      
+    <form id="register" hidden>
+      <label for="address">Server address IP:PORT</label>
+      <input type="text" id="address" value="192.168.0.123:8000" />
+      <label for="display_name">Short name</label>
+      <input type="text" id="display_name" value="Test1" />
+      <label for="description">Description</label>
+      <input type="text" id="description" value="I can be empty" />
+      <button type="submit">Register</button>
     </form>
-    <p id="result"></p>
   </body>
 </html>

@@ -6,8 +6,8 @@ cl = network.WLAN(network.STA_IF)
 
 
 def startAP(ssid, password, security=network.AUTH_WPA2_PSK):
-    ap.config(essid=ssid, password=password, authmode=security)
     ap.active(True)
+    ap.config(essid=ssid, password=password, authmode=security)
     print(ap.ifconfig())
 
 

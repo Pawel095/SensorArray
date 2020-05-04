@@ -36,12 +36,14 @@ window.onload = (ev) => {
                 }, 100);
                 break;
               case "5":
-                $("#result").text("Connected!");
+                $("#result").text("Connection Successful!");
+                $("#connect").hide();
+                $("#register").show();
                 setTimeout(() => {
                   clearInterval(self);
                 }, 100);
-                
                 break;
+
               default:
                 break;
             }
@@ -49,6 +51,21 @@ window.onload = (ev) => {
         }, 500);
       })
       .fail(() => {});
+    return false;
+  });
+
+  $("#register").submit((ev) => {
+    ip = ev.target[0].value;
+    display_name = ev.target[1].value;
+    description = ev.target[2].value;
+
+    $.post("/api/register", JSON.stringify({ ip, display_name, description }))
+      .done((data) => {
+        $("#registerResult").text("Registration Successful!");
+      })
+      .fail((data) => {
+        $("#registerResult").text("Error "+data);
+      });
     return false;
   });
 };

@@ -2,9 +2,9 @@ from wlan.control import startAP, disableCL
 import util
 from config import CONFIG, save_config
 from server import Server, Response, View
-from wlan.control import statusCL, disableCL, connectCL
-import uasyncio as asyncio
+from wlan.control import statusCL, connectCL
 import ujson as json
+import urequests as requests
 
 app = Server()
 
@@ -23,18 +23,16 @@ class SetupMode:
 
         disableCL()
         startAP(ssid, password)
+
         app.register_func(index, "/", ["GET"])
         app.register_func(jquery, "/jquery.js", ["GET"])
         app.register_func(mainJs, "/main.js", ["GET"])
+        app.register_func(check_server_and_register, "/api/register", ["POST"])
         app.register_view(connectionApi(), "/api/connect")
-        app.register_func(look_for_backend, "/api/search", ["POST"])
+
         print("setup mode enabled")
         app.run()
         print("server stopped")
-
-
-def look_for_backend(request):
-    return Response(status=200)
 
 
 class connectionApi(View):
@@ -59,6 +57,42 @@ class connectionApi(View):
     def delete(self, request):
         disableCL()
         return Response(status=200)
+
+
+def check_server_and_register(req):
+    try:
+        data = json.loads(req.body)
+    except ValueError:
+        return Response(status=400)
+
+    if "ip" in data:
+        try:
+            resp = requests.get("http://{}/api/identify/".format(data["ip"]))
+        except OSError as e:
+            return Response(body=str(e), status=404)
+
+    if resp.status_code == 200:
+        if resp.text == '"DataCollectorV1"':
+            try:
+                resp = requests.post(
+                    "http://{}/api/register/".format(data["ip"]),
+                    json={
+                        "id": CONFIG["id"],
+                        "display_name": data.get("display_name", CONFIG["id"]),
+                        "description": data.get("description"),
+                    },
+                )
+            except OSError as e:
+                return Response(body=str(e), status=400)
+            else:
+                if resp.status_code == 200:
+                    CONFIG["server"] = data["ip"]
+                    CONFIG["state"] = "collector"
+                    save_config()
+                    return Response(status=200)
+                else:
+                    return Response(status=400)
+    return Response(status=400)
 
 
 def index(req):
