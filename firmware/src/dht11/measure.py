@@ -1,11 +1,10 @@
 from machine import Pin
 import dht
 import time
-import uasyncio as asyncio
-from uasyncio.synchro import Lock
+from uasyncio.lock import Lock
 
 
-class dhtMeasure:
+class Measure:
     def __init__(self, lock, led=None):
         self.MEASUREMENT_DELAY = 5
         self.lock = lock

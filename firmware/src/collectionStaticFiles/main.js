@@ -14,5 +14,5 @@ function getSensorData() {
 }
 window.onload = (ev) => {
   getSensorData()
-  setInterval(getSensorData, 3000);
+  setInterval(getSensorData, 10000);
 };
