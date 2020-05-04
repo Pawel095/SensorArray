@@ -51,7 +51,7 @@ class Request:
                 flag = True
 
             if flag:
-                self.body += line+"\r\n"
+                self.body += line + "\r\n"
 
     def __str__(self):
         ret = "method:{}\r\nURL:{}\r\n".format(self.method, self.url)
@@ -88,10 +88,12 @@ class Response:
 
 
 class Server:
-    def __init__(self):
+    def __init__(self, lock):
         self.routes = []
+        self.lock = lock
 
     async def handler(self, reader, writer):
+        await self.lock.acquire()
         request_bytes = await reader.read(-1)
         req = Request(request_bytes.decode())
         addr = reader.get_extra_info("peername")
@@ -102,6 +104,7 @@ class Server:
             if r["route"] == req.route:
                 view = r.get("view")
                 func = r.get("func")
+                asfc = r.get("asfc")
 
                 if view is not None:
                     resp = view.runMethod(req)
@@ -114,10 +117,18 @@ class Server:
                     else:
                         resp = Response(status=405)
 
+                elif asfc is not None:
+                    if req.method in r["methods"]:
+                        print("Async func {}".format(r["asfc"]))
+                        resp = await asfc(req)
+                    else:
+                        resp = Response(status=405)
+
         for b in resp.to_bytes():
             await writer.awrite(b)
         await writer.aclose()
         await reader.aclose()
+        self.lock.release
 
     def register_view(self, view, route):
         """set function for foute
@@ -132,6 +143,14 @@ class Server:
             )
         )
         self.routes.append({"func": func, "route": route, "methods": methods})
+
+    def register_afunc(self, async_func, route, methods):
+        print(
+            "registering {}".format(
+                {"asfc": str(async_func), "route": route, "methods": methods}
+            )
+        )
+        self.routes.append({"asfc": async_func, "route": route, "methods": methods})
 
     def run(self):
         task = asyncio.start_server(self.handler, "0.0.0.0", 80, backlog=2)

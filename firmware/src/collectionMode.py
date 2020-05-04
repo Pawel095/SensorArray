@@ -2,22 +2,37 @@ from wlan.control import stopAP, connectCL, cl as client
 from machine import Pin, PWM
 from config import CONFIG
 from dht11.measure import Measure
-from server import Server, Response, View
+from server import Server, Response
+import ujson as json
+import gc
 import uasyncio as asyncio
+import urequests as requests
+from uasyncio.lock import Lock
 
-app = Server()
+green = Pin(2, Pin.OUT)
+red = Pin(0, Pin.OUT)
+
+server_lock = Lock()
+
+app = Server(server_lock)
 loop = asyncio.get_event_loop()
+
+reading_lock = Lock()
+temp_reader = Measure(reading_lock, led=red)
 
 
 class CollectionMode:
     def __init__(self):
-        self.green = Pin(2, Pin.OUT)
-        self.red = Pin(0, Pin.OUT)
-        task = ping_led_until_true(self.green, client.isconnected, 10)
+        task = ping_led_until_true(green, client.isconnected, 10)
         loop.create_task(task)
+        task = send_data_to_server()
+        loop.create_task(task)
+
         app.register_func(index, "/", ["GET"])
         app.register_func(jquery, "/jquery.js", ["GET"])
         app.register_func(mainJs, "/main.js", ["GET"])
+        app.register_afunc(single_reading, "/api/getReading", ["GET"])
+
         stopAP()
         connectCL()
         print("INIT")
@@ -41,8 +56,26 @@ async def ping_led_until_true(led: Pin, condition, freq, delay=1000):
     return
 
 
+async def single_reading(req):
+    data = await temp_reader()
+    return Response(body=json.dumps(data), status=200)
+
+
 async def send_data_to_server():
-    await asyncio.sleep(10)
+    while True:
+        await server_lock.acquire()
+        url = "http://{}/log_data/{}/".format(CONFIG["server"], CONFIG["id"])
+        gc.collect()
+        body = json.dumps(await temp_reader())
+        print("{} :: {}".format(url, body))
+        try:
+            resp = requests.post(url, data=body)
+        except OSError as e:
+            print("error sending data {}".format(e))
+
+        gc.collect()
+        server_lock.release()
+        await asyncio.sleep(15)
 
 
 def index(req):

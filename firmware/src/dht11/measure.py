@@ -1,7 +1,6 @@
 from machine import Pin
 import dht
 import time
-from uasyncio.lock import Lock
 
 
 class Measure:

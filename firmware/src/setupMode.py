@@ -4,9 +4,11 @@ from config import CONFIG, save_config
 from server import Server, Response, View
 from wlan.control import statusCL, connectCL
 import ujson as json
+from uasyncio.lock import Lock
 import urequests as requests
 
-app = Server()
+server_lock = Lock()
+app = Server(server_lock)
 
 
 class SetupMode:
