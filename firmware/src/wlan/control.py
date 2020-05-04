@@ -31,6 +31,10 @@ def statusCL():
     return cl.status()
 
 
+def get_ipCL():
+    return cl.ifconfig()[0]
+
+
 def disconnectCL():
     cl.disconnect()
 

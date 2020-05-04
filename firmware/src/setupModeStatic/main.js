@@ -61,10 +61,10 @@ window.onload = (ev) => {
 
     $.post("/api/register", JSON.stringify({ ip, display_name, description }))
       .done((data) => {
-        $("#registerResult").text("Registration Successful!");
+        $("#registerResult").text("Registration Successful!, new ip: " + data);
       })
       .fail((data) => {
-        $("#registerResult").text("Error "+data);
+        $("#registerResult").text("Error " + data);
       });
     return false;
   });

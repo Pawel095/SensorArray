@@ -1,4 +1,4 @@
-from wlan.control import startAP, disableCL
+from wlan.control import startAP, disableCL, get_ipCL
 import util
 from config import CONFIG, save_config
 from server import Server, Response, View
@@ -12,8 +12,6 @@ app = Server()
 class SetupMode:
     def __init__(self):
         print("INIT")
-
-    def __call__(self):
         if CONFIG.get("id") == "":
             CONFIG["id"] = util.generate_random_name()
             save_config()
@@ -30,6 +28,7 @@ class SetupMode:
         app.register_func(check_server_and_register, "/api/register", ["POST"])
         app.register_view(connectionApi(), "/api/connect")
 
+    def __call__(self):
         print("setup mode enabled")
         app.run()
         print("server stopped")
@@ -89,7 +88,7 @@ def check_server_and_register(req):
                     CONFIG["server"] = data["ip"]
                     CONFIG["state"] = "collector"
                     save_config()
-                    return Response(status=200)
+                    return Response(status=200, body=str(get_ipCL()))
                 else:
                     return Response(status=400)
     return Response(status=400)
