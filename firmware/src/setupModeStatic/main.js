@@ -67,7 +67,7 @@ window.onload = (ev) => {
         $("#registerResult").text("Registration Successful! New ip:").append(a);
       })
       .fail((data) => {
-        $("#registerResult").text("Error " + data);
+        $("#registerResult").text("Error " + JSON.stringify(data.responseText));
       });
     return false;
   });

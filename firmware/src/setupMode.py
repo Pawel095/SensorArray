@@ -4,9 +4,10 @@ from config import CONFIG, save_config
 from server import Server, Response, View
 from wlan.control import statusCL, connectCL
 import ujson as json
+import uasyncio as asyncio
 from uasyncio.lock import Lock
 import urequests as requests
-from machine import Pin
+from machine import Pin, reset
 
 server_lock = Lock()
 app = Server(server_lock)
@@ -27,7 +28,6 @@ class SetupMode:
 
         disableCL()
         startAP(ssid, password)
-        green.on()
         red.on()
 
         app.register_func(index, "/", ["GET"])
@@ -84,7 +84,7 @@ def check_server_and_register(req):
                 resp = requests.post(
                     "http://{}/api/register/".format(data["ip"]),
                     json={
-                        "id": CONFIG["id"],
+                        "name": CONFIG["id"],
                         "display_name": data.get("display_name", CONFIG["id"]),
                         "description": data.get("description"),
                     },
@@ -93,14 +93,20 @@ def check_server_and_register(req):
             except OSError as e:
                 return Response(body=str(e), status=400)
             else:
-                if resp.status_code == 200:
+                if resp.status_code == 201:
                     CONFIG["server"] = data["ip"]
                     CONFIG["state"] = "collector"
                     save_config()
+                    asyncio.get_event_loop().create_task(scheduleReset(3))
                     return Response(status=200, body=str(get_ipCL()))
                 else:
-                    return Response(status=400)
+                    return Response(body=str(resp.text), status=400)
     return Response(status=400)
+
+
+async def scheduleReset(delay):
+    await asyncio.sleep(delay)
+    reset()
 
 
 def index(req):

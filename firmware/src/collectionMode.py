@@ -69,11 +69,16 @@ async def send_data_to_server():
         body = json.dumps(await temp_reader())
         print("{} :: {}".format(url, body))
         try:
-            resp = requests.post(url, data=body, headers={"Content-Type": "application/json"})
+            resp = requests.post(
+                url, data=body, headers={"Content-Type": "application/json"}
+            )
         except OSError as e:
             print("error sending data {}".format(e))
         else:
-            print(resp.text)
+            try:
+                print(resp.text)
+            except MemoryError:
+                print("response too big")
         gc.collect()
         server_lock.release()
         await asyncio.sleep(15)
