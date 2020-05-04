@@ -5,7 +5,7 @@ METHODS = ["GET", "POST", "PUT", "DELETE"]
 
 
 class Request:
-    def __init__(self, request_string: str):
+    def __init__(self, request_string):
         lines = request_string.split("\r\n")
         t = lines[0].split(" ")
         try:

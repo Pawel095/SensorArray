@@ -64,15 +64,16 @@ async def single_reading(req):
 async def send_data_to_server():
     while True:
         await server_lock.acquire()
-        url = "http://{}/log_data/{}/".format(CONFIG["server"], CONFIG["id"])
+        url = "http://{}/api/log_data/{}/".format(CONFIG["server"], CONFIG["id"])
         gc.collect()
         body = json.dumps(await temp_reader())
         print("{} :: {}".format(url, body))
         try:
-            resp = requests.post(url, data=body)
+            resp = requests.post(url, data=body, headers={"Content-Type": "application/json"})
         except OSError as e:
             print("error sending data {}".format(e))
-
+        else:
+            print(resp.text)
         gc.collect()
         server_lock.release()
         await asyncio.sleep(15)
