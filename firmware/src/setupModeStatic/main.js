@@ -61,7 +61,10 @@ window.onload = (ev) => {
 
     $.post("/api/register", JSON.stringify({ ip, display_name, description }))
       .done((data) => {
-        $("#registerResult").text("Registration Successful!, new ip: " + data);
+        let a = $("<a></a>");
+        a.text(data);
+        a.attr("href", "http://" + data);
+        $("#registerResult").text("Registration Successful! New ip:").append(a);
       })
       .fail((data) => {
         $("#registerResult").text("Error " + data);

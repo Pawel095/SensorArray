@@ -6,9 +6,13 @@ from wlan.control import statusCL, connectCL
 import ujson as json
 from uasyncio.lock import Lock
 import urequests as requests
+from machine import Pin
 
 server_lock = Lock()
 app = Server(server_lock)
+
+green = Pin(2, Pin.OUT)
+red = Pin(0, Pin.OUT)
 
 
 class SetupMode:
@@ -23,6 +27,8 @@ class SetupMode:
 
         disableCL()
         startAP(ssid, password)
+        green.on()
+        red.on()
 
         app.register_func(index, "/", ["GET"])
         app.register_func(jquery, "/jquery.js", ["GET"])
@@ -83,6 +89,7 @@ def check_server_and_register(req):
                         "description": data.get("description"),
                     },
                 )
+                print(resp.text)
             except OSError as e:
                 return Response(body=str(e), status=400)
             else:

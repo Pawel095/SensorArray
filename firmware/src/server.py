@@ -128,7 +128,7 @@ class Server:
             await writer.awrite(b)
         await writer.aclose()
         await reader.aclose()
-        self.lock.release
+        self.lock.release()
 
     def register_view(self, view, route):
         """set function for foute
