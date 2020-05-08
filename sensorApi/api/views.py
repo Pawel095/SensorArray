@@ -73,3 +73,11 @@ class AllData(APIView):
         )
         serializer = AllSensorsDataSerialiser(data, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class SensorsList(APIView):
+    def get(self, request):
+        sensors = RegisteredSensors.objects.all()
+        serializer = RegisteredSensorsSerializer(sensors, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
