@@ -10,7 +10,11 @@ class RegisteredSensors(models.Model):
 
 
 class LoggedData(models.Model):
-    timestamp = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
     temperature = models.FloatField(default=0)
     humidity = models.FloatField(default=0)
     sensor = models.ForeignKey(RegisteredSensors, on_delete=models.SET_NULL, null=True)
+
+    @property
+    def sensor_id_string(self):
+        return self.sensor.name
