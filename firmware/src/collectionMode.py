@@ -100,4 +100,6 @@ def jquery(req):
         "Content-Type": "application/javascript",
         "Cache-Control": "max-age=2592000, public",
     }
-    return Response(status=200, body=open("jquery/jquery.js"), headers=headers)
+    return Response(
+        status=200, body=open("jquery/jquery-3.5.1.min.js"), headers=headers
+    )
