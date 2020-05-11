@@ -11,7 +11,7 @@
         <td>{{ s.name }}</td>
         <td>{{ s.display_name }}</td>
         <td>{{ s.description }}</td>
-        <td><router-link tag="button" :to="'/sensor/'+s.name" >xd</router-link></td>
+        <td><router-link tag="button" :to="'/sensor/'+s.name" >Show Data</router-link></td>
       </tr>
     </table>
   </div>
@@ -26,7 +26,6 @@ export default Vue.extend({
     };
   },
   mounted() {
-    // @ts-ignore
     this.$http.get("http://localhost:8000/api/sensors_list/").then((data) => {
       this.sensors = data.data;
     });

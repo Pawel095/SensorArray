@@ -9,6 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "chart.js": "^2.9.3",
     "core-js": "^3.6.4",
     "primeicons": "^3.0.0-rc.1",

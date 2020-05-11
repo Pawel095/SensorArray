@@ -9,12 +9,16 @@ import VueResource from "vue-resource";
 Vue.use(VueResource);
 
 // PrimeVue
-import 'primevue/resources/themes/nova-light/theme.css';
-import 'primevue/resources/primevue.min.css';
-import 'primeicons/primeicons.css';
+import "primevue/resources/themes/nova-light/theme.css";
+import "primevue/resources/primevue.min.css";
+import "primeicons/primeicons.css";
 
 import Calendar from "primevue/calendar";
-Vue.component("calendar",Calendar);
+Vue.component("calendar", Calendar);
+
+import Chart from "primevue/chart";
+Vue.component("chart", Chart);
+
 
 new Vue({
   router,
