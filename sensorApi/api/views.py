@@ -36,7 +36,7 @@ class DataPerSensor(APIView):
             sensor = RegisteredSensors.objects.get(name=sensor_id)
         except RegisteredSensors.DoesNotExist:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
-
+        print(data)
         data["sensor"] = sensor.pk
         ser = LoggedDataSerializer(data=data)
         if ser.is_valid():

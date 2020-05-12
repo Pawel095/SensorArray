@@ -5,7 +5,7 @@ from .models import LoggedData, RegisteredSensors
 class LoggedDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = LoggedData
-        fields = ["temperature", "humidity"]
+        fields = ["temperature", "humidity", "sensor"]
 
 
 class RegisteredSensorsSerializer(serializers.ModelSerializer):

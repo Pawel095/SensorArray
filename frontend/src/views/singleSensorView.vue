@@ -5,6 +5,7 @@
       selectionMode="single"
       :showButtonBar="true"
       :showTime="true"
+      @date-select="updateChart($event)"
     ></calendar>
     <calendar
       v-model="end"
@@ -56,7 +57,7 @@ export default Vue.extend({
   },
   mounted() {
     this.ssd.updateData(this.sid, +this.start, +this.end).then((data) => {
-      console.log(data.data);
+      this.chartData = this.ssd.parseDataForChart();
     });
   },
   methods: {
