@@ -33,6 +33,25 @@ export default Vue.extend({
         hoverMode: "index",
         stacked: false,
         scales: {
+          xAxes: [
+            {
+              type: "time",
+              id: "time-axis",
+              time: {
+                displayFormats: {
+                  millisecond: "MMM DD",
+                  second: "MMM DD",
+                  minute: "MMM DD",
+                  hour: "MMM DD",
+                  day: "MMM DD",
+                  week: "MMM DD",
+                  month: "MMM DD",
+                  quarter: "MMM DD",
+                  year: "MMM DD",
+                },
+              },
+            },
+          ],
           yAxes: [
             {
               type: "linear",

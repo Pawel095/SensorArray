@@ -11,7 +11,11 @@
         <td>{{ s.name }}</td>
         <td>{{ s.display_name }}</td>
         <td>{{ s.description }}</td>
-        <td><router-link tag="button" :to="'/sensor/'+s.name" >Show Data</router-link></td>
+        <td>
+          <router-link tag="button" :to="'/sensor/' + s.name"
+            >Show Data</router-link
+          >
+        </td>
       </tr>
     </table>
   </div>
@@ -19,11 +23,13 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { SensorDescription } from "../types";
 export default Vue.extend({
   data() {
-    return {
+    let obj: { sensors: SensorDescription[] } = {
       sensors: [],
     };
+    return obj;
   },
   mounted() {
     this.$http.get("http://localhost:8000/api/sensors_list/").then((data) => {

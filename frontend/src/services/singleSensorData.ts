@@ -27,22 +27,10 @@ export default class SingleSensorData {
   }
 
   parseDataForChart() {
-    const timestamps = this.lastData.map((e) => {
-      const d = new Date(e.timestamp);
-      return (
-        d.getFullYear() +
-        "-" +
-        d.getMonth() +
-        "-" +
-        d.getDate() +
-        " " +
-        d.getHours() +
-        ":" +
-        d.getMinutes() +
-        ":" +
-        d.getSeconds()
-      );
+    const dates = this.lastData.map((e) => {
+      return new Date(e.timestamp);
     });
+
     const temperatures = this.lastData.map((e) => {
       return e.temperature;
     });
@@ -50,8 +38,7 @@ export default class SingleSensorData {
       return e.humidity;
     });
     let ret = {
-      // Timestampy
-      labels: timestamps,
+      labels: dates,
       datasets: [
         {
           label: "Temperature",
