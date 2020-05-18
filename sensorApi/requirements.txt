@@ -1,5 +1,5 @@
-django==3.0.5
-djangorestframework==3.11.0
+django
+djangorestframework
 
 #dev
 flake8
