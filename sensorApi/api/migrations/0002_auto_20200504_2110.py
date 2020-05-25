@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0001_initial'),
+        ("api", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='registeredsensors',
-            name='display_name',
-            field=models.TextField(default='not_set', max_length=255),
+            model_name="registeredsensors",
+            name="display_name",
+            field=models.TextField(default="not_set", max_length=255),
         ),
         migrations.AlterField(
-            model_name='registeredsensors',
-            name='description',
+            model_name="registeredsensors",
+            name="description",
             field=models.TextField(blank=True, max_length=1000),
         ),
     ]

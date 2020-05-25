@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0003_auto_20200504_2154'),
+        ("api", "0003_auto_20200504_2154"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='loggeddata',
-            name='humidity',
+            model_name="loggeddata",
+            name="humidity",
             field=models.FloatField(default=0),
         ),
         migrations.AddField(
-            model_name='loggeddata',
-            name='temperature',
+            model_name="loggeddata",
+            name="temperature",
             field=models.FloatField(default=0),
         ),
     ]

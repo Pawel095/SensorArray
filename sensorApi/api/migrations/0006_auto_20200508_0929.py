@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0005_loggeddata_timestamp'),
+        ("api", "0005_loggeddata_timestamp"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='loggeddata',
-            name='timestamp',
+            model_name="loggeddata",
+            name="timestamp",
             field=models.DateTimeField(auto_now_add=True),
         ),
     ]

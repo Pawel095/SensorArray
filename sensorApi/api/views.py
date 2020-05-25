@@ -9,13 +9,14 @@ from .serializers import (
     AllSensorsDataSerialiser,
 )
 from .utils.timestampDefaultValues import generate_timestamps
+from sensorApi.settings import IDENTIFICATION_STRING
 
 # Create your views here.
 
 
 class IdentifySelf(APIView):
     def get(self, request):
-        return Response("DataCollectorV1", status=status.HTTP_200_OK)
+        return Response(IDENTIFICATION_STRING, status=status.HTTP_200_OK)
 
 
 class RegisterSensor(APIView):
@@ -80,4 +81,3 @@ class SensorsList(APIView):
         sensors = RegisteredSensors.objects.all()
         serializer = RegisteredSensorsSerializer(sensors, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-

@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sensorApi.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "sensorApi.settings")
 
 application = get_wsgi_application()
