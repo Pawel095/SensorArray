@@ -14,7 +14,7 @@
         ],
         "django": true
     }, {
-        "name": "Python: loadbalancer test",
+        "name": "Pytest",
         "type": "python",
         "request": "launch",
         "module": "pytest",
