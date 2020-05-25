@@ -1,8 +1,9 @@
 django
 djangorestframework
+pytest-django
+pytest-cov
 
 #dev
 flake8
 rope
 black
-coverage

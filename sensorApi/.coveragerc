@@ -1,0 +1,13 @@
+[run]
+source = .
+omit = 
+    # dont include any tests in coverage calculations
+    *test_*
+    # ignore migrations
+    */migrations/*
+    # ignore django files
+    manage.py
+    sensorApi/?sgi.py
+    *__init__.py
+    # Ignore venv files
+    venv/*
