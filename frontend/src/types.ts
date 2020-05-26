@@ -4,3 +4,8 @@ export interface SensorDescription {
   display_name: string;
   description: string;
 }
+export default interface IsingleSensorData {
+  temperature: number;
+  humidity: number;
+  timestamp: string;
+}
