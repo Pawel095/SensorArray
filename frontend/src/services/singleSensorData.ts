@@ -1,5 +1,6 @@
 import axios from "axios";
-import IsingleSensorData from "./IsingleSensorData";
+import IsingleSensorData from '@/types';
+
 
 export default class SingleSensorData {
   url = "http://localhost:8000/api/log_data/";
