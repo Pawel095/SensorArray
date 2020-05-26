@@ -4,9 +4,6 @@ import router from "./router";
 
 Vue.config.productionTip = false;
 
-// VueResource
-import VueResource from "vue-resource";
-Vue.use(VueResource);
 
 // PrimeVue
 import "primevue/resources/themes/nova-light/theme.css";

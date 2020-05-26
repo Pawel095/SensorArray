@@ -1,16 +1,16 @@
 <template>
   <div class="home">
-    <table>
+    <table class="sensorList">
       <tr>
         <th>id</th>
         <th>Name</th>
         <th>Description</th>
         <th>Show data</th>
       </tr>
-      <tr v-for="s in sensors" :key="s.id">
-        <td>{{ s.name }}</td>
-        <td>{{ s.display_name }}</td>
-        <td>{{ s.description }}</td>
+      <tr v-for="s in sensors" :key="s.id" class="data">
+        <td class="name">{{ s.name }}</td>
+        <td class="display_name">{{ s.display_name }}</td>
+        <td class="description">{{ s.description }}</td>
         <td>
           <router-link tag="button" :to="'/sensor/' + s.name"
             >Show Data</router-link
@@ -24,15 +24,18 @@
 <script lang="ts">
 import Vue from "vue";
 import { SensorDescription } from "../types";
+import SensorListService from "@/services/sensorList";
+
 export default Vue.extend({
   data() {
-    let obj: { sensors: SensorDescription[] } = {
+    let obj: { sensors: SensorDescription[]; service: SensorListService } = {
       sensors: [],
+      service: new SensorListService(),
     };
     return obj;
   },
   mounted() {
-    this.$http.get("http://localhost:8000/api/sensors_list/").then((data) => {
+    this.service.updateData().then((data) => {
       this.sensors = data.data;
     });
   },
