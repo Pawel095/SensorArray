@@ -179,7 +179,7 @@ class SensorsListTests(APITestCase):
         add_sensors(cls)
         return super().setUpTestData()
 
-    def test_(self):
+    def test_SensorsList(self):
         result = self.client.get("/api/sensors_list/")
         assert result.status_code == 200
         assert len(result.data) == 2
