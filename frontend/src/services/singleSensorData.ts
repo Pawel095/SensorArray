@@ -1,6 +1,5 @@
 import axios from "axios";
-import IsingleSensorData from '@/types';
-
+import IsingleSensorData from "@/types";
 
 export default class SingleSensorData {
   url = "http://localhost:8000/api/log_data/";
@@ -9,7 +8,7 @@ export default class SingleSensorData {
     this.lastData = [];
   }
 
-  updateData(sensorId: string, start = -1, end = -1) {
+  makeParams(start: number, end: number) {
     let params = {};
     if (start > 0) {
       const add = { start: start / 1000 };
@@ -19,6 +18,10 @@ export default class SingleSensorData {
       const add = { end: end / 1000 };
       params = { ...params, ...add };
     }
+  }
+
+  updateData(sensorId: string, start = -1, end = -1) {
+    const params = this.makeParams(start, end);
     return axios
       .get(this.url + sensorId + "/", { params: params })
       .then((data) => {
@@ -38,6 +41,7 @@ export default class SingleSensorData {
     const humidities = this.lastData.map((e) => {
       return e.humidity;
     });
+
     let ret = {
       labels: dates,
       datasets: [

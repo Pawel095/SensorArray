@@ -5,14 +5,14 @@
       selectionMode="single"
       :showButtonBar="true"
       :showTime="true"
-      @date-select="updateChart($event)"
+      @date-select="updateChart()"
     ></calendar>
     <calendar
       v-model="end"
       selectionMode="single"
       :showButtonBar="true"
       :showTime="true"
-      @date-select="updateChart($event)"
+      @date-select="updateChart()"
     ></calendar>
     <chart type="line" :data="chartData" :options="chartOptions"></chart>
   </div>

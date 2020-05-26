@@ -1,6 +1,5 @@
 import axios from "axios";
-import IsingleSensorData from '@/types';
-
+import IsingleSensorData from "@/types";
 
 export default class SensorListService {
   url = "http://localhost:8000/api/sensors_list/";
@@ -9,12 +8,10 @@ export default class SensorListService {
     this.lastData = [];
   }
 
-  updateData() {
-    return axios
-      .get(this.url)
-      .then((data) => {
-        this.lastData = data.data;
-        return data;
-      });
+  getData() {
+    return axios.get(this.url).then((data) => {
+      this.lastData = data.data;
+      return data;
+    });
   }
 }

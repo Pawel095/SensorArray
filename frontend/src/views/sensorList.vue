@@ -35,7 +35,7 @@ export default Vue.extend({
     return obj;
   },
   mounted() {
-    this.service.updateData().then((data) => {
+    this.service.getData().then((data) => {
       this.sensors = data.data;
     });
   },

@@ -13,7 +13,7 @@ export default class SensorListService {
       description: "Collection from 2020-05-11 to 2020-05-12",
     },
   ];
-  updateData() {
+  getData() {
     return new Promise((resolve) => {
       resolve({ data: this.lastData });
     });
