@@ -1,0 +1,1 @@
+// testy do serwisu, konkretnie parseDataForChart i makeParams

@@ -18,6 +18,7 @@ export default class SingleSensorData {
       const add = { end: end / 1000 };
       params = { ...params, ...add };
     }
+    return params
   }
 
   updateData(sensorId: string, start = -1, end = -1) {
